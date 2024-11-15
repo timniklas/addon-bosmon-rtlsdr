@@ -1,4 +1,4 @@
-# BosMon Home Assistant add-on
+# RTL-SDR BosMon Home Assistant add-on
 
 This is a collection of Home Assistant add-ons.
 
