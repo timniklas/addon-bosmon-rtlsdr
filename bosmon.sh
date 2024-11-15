@@ -1,6 +1,8 @@
 #!/bin/bash
 
-FREQUENCY=$(jq --raw-output '.frequency // empty' $CONFIG_PATH)M
+CONFIG_PATH=/data/options.json
+
+FREQUENCY=$(jq --raw-output '.frequency // empty' $CONFIG_PATH)
 GAIN=$(jq --raw-output '.gain // empty' $CONFIG_PATH)
 URL=$(jq --raw-output '.bosmon_url // empty' $CONFIG_PATH)
 ENDPOINT=$(jq --raw-output '.bosmon_endpoint // empty' $CONFIG_PATH)
