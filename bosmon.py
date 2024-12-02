@@ -3,6 +3,7 @@ import re
 import aiohttp
 import asyncio
 from enum import Enum
+from time import gmtime, strftime
 
 pattern = r"POCSAG1200:\s+Address:\s+(\d+)\s+Function:\s+(\d)"
 VALUES=['a','b','c','d']
@@ -12,13 +13,13 @@ ENDPOINT=sys.argv[2]
 USERNAME=sys.argv[3]
 PASSWORD=sys.argv[4]
 
-async def publish(address: str, func: str):
+async def publish(addr: str, func: str):
         try:
                 async with aiohttp.ClientSession() as websession:
                         async with websession.post(f'{URL}/telegramin/{ENDPOINT}/input.xml', data={
                                 'type': 'pocsag',
-                                'address': address.rjust(7, '0'),
-                                'function': VALUES[int(func)]
+                                'address': addr.rjust(7, '0'),
+                                'function': func
                         }, auth=aiohttp.BasicAuth(USERNAME, PASSWORD)) as response:
                                 response.raise_for_status()
         except Exception as e:
@@ -31,5 +32,10 @@ for line in sys.stdin:
                 break
         result = re.search(pattern, line)
         if result:
-                print(f"{result[1]} {result[2]}")
-                asyncio.run(publish(result[1], result[2]))
+                addr = result[1]
+                key = result[2]
+                func = VALUES[int(key)]
+                local_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+                
+                print(f"{local_time}: RIC {addr} {function}")
+                asyncio.run(publish(addr, func))
