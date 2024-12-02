@@ -37,5 +37,5 @@ for line in sys.stdin:
                 func = VALUES[int(key)]
                 local_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
                 
-                print(f"{local_time}: RIC {addr} {function}")
+                print(f"{local_time}: RIC {addr} {func}")
                 asyncio.run(publish(addr, func))
