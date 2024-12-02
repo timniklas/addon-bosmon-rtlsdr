@@ -8,4 +8,4 @@ ENDPOINT=$(jq --raw-output '.bosmon_endpoint // empty' $CONFIG_PATH)
 USERNAME=$(jq --raw-output '.bosmon_username // empty' $CONFIG_PATH)
 PASSWORD=$(jq --raw-output '.bosmon_password // empty' $CONFIG_PATH)
 
-rtl_fm -d 0 -f $FREQUENCY -s 22050 -g 100 | multimon-ng -t raw -a POCSAG1200 /dev/stdin | python3 /app/bosmon.py $URL $ENDPOINT $USERNAME $PASSWORD
+rtl_fm -d 0 -f $FREQUENCY -s 22050 -g 100 | multimon-ng -t raw -a POCSAG1200 /dev/stdin | python3 -u /app/bosmon.py $URL $ENDPOINT $USERNAME $PASSWORD
